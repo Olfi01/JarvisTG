@@ -3,18 +3,20 @@ using System;
 using System.Threading;
 using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace JarvisTG
 {
     class JarvisTG
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof(JarvisTG));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(JarvisTG));
 
         private static string tgBotApiToken;
         private static string openAiToken;
 
         private static TelegramBotClient tgClient;
+        public static User BotUser;
         private static readonly ReceiverOptions tgReceiverOptions = new()
         {
             AllowedUpdates = new UpdateType[]
@@ -25,7 +27,7 @@ namespace JarvisTG
         };
         public static readonly CancellationTokenSource CancellationTokenSource = new();
 
-        static void Main(string[] args)
+        static async void Main(string[] args)
         {
             if (args.Length < 2)
             {
@@ -37,13 +39,16 @@ namespace JarvisTG
 
             tgClient = new TelegramBotClient(tgBotApiToken);
 
+            BotUser = await tgClient.GetMeAsync();
+            logger.Info($"Telegram User: {BotUser}");
+
             try
             {
-                tgClient.ReceiveAsync<UpdateHandler>(tgReceiverOptions, CancellationTokenSource.Token);
+                await tgClient.ReceiveAsync<UpdateHandler>(tgReceiverOptions, CancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
-
+                logger.Info("Receiving was cancelled, shutting down.");
             }
         }
     }

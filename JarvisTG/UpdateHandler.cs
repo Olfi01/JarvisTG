@@ -41,7 +41,7 @@ namespace JarvisTG
                     if (type.IsDefined(typeof(TgCommandsAttribute), true))
                     {
                         TgCommandsAttribute typeAttribute = type.GetCustomAttribute<TgCommandsAttribute>();
-                        foreach (var method in type.GetMethods())
+                        foreach (var method in type.GetMethods(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public))
                         {
                             if (method.IsDefined(typeof(TgCommandAttribute), true))
                             {

@@ -27,7 +27,7 @@ namespace JarvisTG
         };
         public static readonly CancellationTokenSource CancellationTokenSource = new();
 
-        static async void Main(string[] args)
+        static void Main(string[] args)
         {
             if (args.Length < 2)
             {
@@ -39,12 +39,12 @@ namespace JarvisTG
 
             tgClient = new TelegramBotClient(tgBotApiToken);
 
-            BotUser = await tgClient.GetMeAsync();
+            BotUser = tgClient.GetMeAsync().Result;
             logger.Info($"Telegram User: {BotUser}");
 
             try
             {
-                await tgClient.ReceiveAsync<UpdateHandler>(tgReceiverOptions, CancellationTokenSource.Token);
+                tgClient.ReceiveAsync<UpdateHandler>(tgReceiverOptions, CancellationTokenSource.Token).Wait();
             }
             catch (OperationCanceledException)
             {

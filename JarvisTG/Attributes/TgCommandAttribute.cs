@@ -11,5 +11,10 @@ namespace JarvisTG.Attributes
     {
         public string Trigger { get; init; }
         public PermissionLevel PermissionLevel { get; init; }
+
+        public TgCommandAttribute(string trigger)
+        {
+            Trigger = trigger;
+        }
     }
 }

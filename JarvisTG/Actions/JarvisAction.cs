@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace JarvisTG.Commands
+namespace JarvisTG.Actions
 {
-    public class JarvisCommand
+    public class JarvisAction
     {
-        public delegate Task CommandDelegate(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken);
+        public delegate Task ActionDelegate(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken);
 
-        public string Trigger { get; init; }
+        public string ActionId { get; init; }
 
-        public CommandDelegate Execute { get; init; }
+        public ActionDelegate Execute { get; init; }
 
         public PermissionLevel PermissionLevel { get; init; }
 

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace JarvisTG.Types
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class TgCommandsAttribute : Attribute
+    public class JarvisActionsAttribute : Attribute
     {
         public PermissionLevel PermissionLevel { get; init; } = PermissionLevel.Any;
-        public AllowedChatTypes AllowedChatTypes { get; init; } = AllowedChatTypes.PrivateOrAnyGroup;
+        public AllowedChatTypes AllowedChatTypes { get; init; } = AllowedChatTypes.Any;
     }
 }
